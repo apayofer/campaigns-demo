@@ -13,19 +13,19 @@ pipeline {
     stages {
         stage('Packaging') {
             steps {
-                echo 'Packaging..'
+                echo 'Packaging...'
                 sh 'mvn clean package'
             }
         }
-        stage('Copying war file') {
+        stage('Copying jar file') {
             steps {
-                echo 'Copying war file..'
-                sh 'mv target/*.war .'
+                echo 'Copying jar file...'
+                sh 'mv target/*.jar .'
             }
         }
         stage('build image') {
             steps {
-                sh 'docker build -t apayofer/devops-web-project:v1 --label devops-web-project-server .'
+                sh 'docker build -t apayofer/campaign-demo:v1 --label campaign-demo-server .'
             }
         }
         stage('Docker Hub Login') {
@@ -35,7 +35,7 @@ pipeline {
         }
         stage('Push to Docker Hub') {
             steps {
-                sh 'docker push apayofer/devops-web-project:v1'
+                sh 'docker push apayofer/campaign-demo:v1'
             }
         }
     }
